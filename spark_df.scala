@@ -56,3 +56,14 @@ df.filter($"High" === 484.40).show() // scala notation
 //Pearson correlation
 
 df.select(corr("High", "Low")).show()
+
+
+/////// Date and Timestamp //////
+
+df.select(year(df("Date"))).show()
+
+val df2 = df.withColumn("Year", year(df("Date")))
+
+val dfavgs = df2.groupBy("Year").mean()
+
+dfavgs.orderBy($"Year".asc).select($"Year", $"avg(Close)").show()
